@@ -1,0 +1,16 @@
+---
+- name: Disable root login
+  lineinfile:  # This task uses the lineinfile module, which ensures a particular line is in a file
+    dest: /etc/ssh/sshd_config  # The file to be modified
+    regexp: "^PermitRootLogin"  # The regular expression that needs to be matched. In this case, lines starting with "PermitRootLogin"
+    line: "PermitRootLogin no"  # The line to insert/replace into the file. If a line matching 'regexp' is found, it'll be replaced by this line. If a line matching 'regexp' isn't found, this line will be added to the file
+    state: present  # Ensure the line is present in the file
+  notify: restart ssh  # If there's a change in the file, notify the 'restart ssh' handler (which should be defined elsewhere in your playbook or in a loaded role)
+
+- name: Disable password authentication
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^#?PasswordAuthentication"  # The '?' makes the '#' optional, so this will match lines starting with "PasswordAuthentication" and lines starting with "#PasswordAuthentication"
+    line: "PasswordAuthentication no"
+    state: present
+  notify: restart ssh  # If there's a change in the file, notify the 'restart ssh' handler

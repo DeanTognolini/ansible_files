@@ -1,0 +1,21 @@
+---
+- name: Install Debian family packages (apt/Ubuntu/Debian)
+  apt:
+    name:  # Here we define the packages to be installed
+      - aptitude
+      - neovim
+      - fail2ban
+      - ufw
+    state: present  # Ensures that the state of the packages is present, so if they're not installed, this command will install them
+    update_cache: yes  # Updates the local apt package cache before the installation
+  become: yes
+  when: ansible_os_family == "Debian"  # This task will only be executed when the operating system of the target host is of the Debian family (e.g., Ubuntu, Debian)
+
+- name: Install RedHat family packages (dnf/RedHat/CentOS/Fedora)
+  dnf:
+    name:  # Here we define the packages to be installed
+      - vim
+    state: present  # Ensures that the state of the package is present, so if it's not installed, this command will install it
+    update_cache: true  # Updates the local dnf package cache before the installation
+  become: yes
+  when: ansible_os_family == "RedHat"  # This task will only be executed when the operating system of the target host is of the RedHat family (e.g., Fedora, CentOS, RHEL)

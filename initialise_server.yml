@@ -1,0 +1,29 @@
+---
+- hosts: servers
+  user: devops
+  become: yes
+  vars:
+    public_key: ~/.ssh/id_rsa.pub
+  vars_files:
+    - group_vars/servers/vault.yml
+
+  tasks:
+    - name: Include Debian family specific roles (Ubuntu/Debian)
+      include_role:
+        name: "{{ item }}"
+      loop:
+        - common
+        - ufw
+        - user
+        - ssh
+      when: ansible_os_family == "Debian"
+
+    - name: Include RedHat family specific roles (RedHat/CentOS/Fedora)
+      include_role:
+        name: "{{ item }}"
+      loop:
+        - common
+        - firewalld
+        - user
+        - ssh
+      when: ansible_os_family ==  'RedHat'

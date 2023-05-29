@@ -1,0 +1,14 @@
+---
+- name: Block dhcpv6-client
+  firewalld:
+    service: dhcpv6-client  # The name of the service for which the rule is being set
+    permanent: true  # Whether the firewall rule should persist across reboots. 'true' means it will
+    state: disabled  # Whether the service should be allowed through the firewall. 'disabled' means it won't be
+  notify: restart firewalld
+
+- name: Allow SSH
+  firewalld:
+    service: ssh  # The name of the service for which the rule is being set
+    permanent: true  # Whether the firewall rule should persist across reboots. 'true' means it will
+    state: enabled  # Whether the service should be allowed through the firewall. 'enabled' means it will be
+  notify: restart firewalld

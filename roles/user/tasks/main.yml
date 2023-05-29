@@ -1,0 +1,27 @@
+---
+- name: Ensure sudo group is present  # This task ensures that the sudo group is created on the system
+  group:
+    name: sudo  # The name of the group to be managed
+    state: present  # Whether the group should exist. 'present' means yes
+
+- name: Ensure sudo group has sudo privileges  # This task configures sudo permissions for the sudo group
+  lineinfile:  
+    dest: /etc/sudoers  # The file in which the line should be managed
+    state: present  # Ensures that the line is in the file
+    regexp: "^%sudo"  # The regular expression to match lines to be managed
+    line: "%sudo ALL=(ALL:ALL) ALL"  # The line to insert/replace when the regular expression is matched
+    validate: "/usr/sbin/visudo -cf %s"  # Command to validate sudoers file
+
+- name: Create default user  # This task creates a new user with sudo privileges
+  user:
+    name: "{{ username }}"  # The name of the user to create
+    groups: sudo  # The user is added to the sudo group
+    password: "{{ password }}"  # The password for the new user
+    shell: /bin/bash  # The shell for the new user
+    update_password: always  # Whether to update the password. 'always' will update passwords if they differ
+    state: present  # Whether the user should exist. 'present' means yes
+
+- name: Add authorized key  # This task adds an SSH authorized key for the new user
+  authorized_key:
+    user: "{{ username }}"  # The username on the remote host
+    key: "{{ lookup('file', public_key) }}"  # The SSH key to add. This uses the 'file' lookup plugin to fetch the contents of the file at the path stored in the 'public_key' variable

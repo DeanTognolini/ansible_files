@@ -1,0 +1,15 @@
+---
+- name: Install Fail2Ban
+  package:
+    name: fail2ban
+    state: present
+
+- name: Enable Fail2Ban service at boot
+  systemd:
+    name: fail2ban
+    enabled: yes
+
+- name: Start Fail2Ban service
+  systemd:
+    name: fail2ban
+    state: started

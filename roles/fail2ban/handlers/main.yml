@@ -1,0 +1,8 @@
+---
+# This handler is called whenever the fail2ban configuration changes
+# It restarts the fail2ban service to make sure changes take effect
+- name: restart fail2ban
+  systemd:
+    name: fail2ban
+    state: restarted
+

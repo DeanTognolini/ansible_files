@@ -1,0 +1,7 @@
+[servers]
+woolNode01
+coldNode01
+
+[docker_hosts]
+woolNode01
+coldNode01
