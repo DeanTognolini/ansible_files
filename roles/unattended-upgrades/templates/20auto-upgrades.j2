@@ -1,0 +1,18 @@
+APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Download-Upgradeable-Packages "1";
+APT::Periodic::AutocleanInterval "7";
+APT::Periodic::Unattended-Upgrade "1";
+
+Unattended-Upgrade::Origins-Pattern {
+    {{ unattended_origins_pattern }};
+};
+
+Unattended-Upgrade::Package-Blacklist {
+{% for package in unattended_package_blacklist %}
+    "{{ package }}";
+{% endfor %}
+};
+
+Unattended-Upgrade::Automatic-Reboot "{{ unattended_automatic_reboot }}";
+Unattended-Upgrade::Automatic-Reboot-Time "{{ unattended_automatic_reboot_time }}";
+

@@ -1,0 +1,7 @@
+---
+# defaults file for unattended_upgrades
+unattended_origins_pattern: '"origin=Debian,codename=${distro_codename},label=Debian-Security";'
+unattended_package_blacklist: []
+unattended_automatic_reboot: 'false'
+unattended_automatic_reboot_time: '02:00'
+
