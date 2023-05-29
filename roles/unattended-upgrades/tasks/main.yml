@@ -1,0 +1,21 @@
+---
+- name: Copy 20auto-upgrades file to host
+  copy:
+    src: 20auto-upgrades
+    dest: /etc/apt/apt.conf.d/20auto-upgrades
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+
+- name: Install unattended upgrades and update notifier
+  apt:
+    name:
+      - unattended-upgrades
+    state: present
+  become: true
+
+- name: Run unattended upgrades
+  command: unattended-upgrades --debug --dry-run
+  become: true
+
