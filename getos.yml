@@ -1,0 +1,10 @@
+---
+- hosts: all
+  tasks:
+    - name: Gather OS facts
+      setup:
+        filter: ansible_distribution*
+
+    - name: Display OS and OS version
+      debug:
+        msg: "OS: {{ ansible_distribution }}, OS Version: {{ ansible_distribution_version }}"

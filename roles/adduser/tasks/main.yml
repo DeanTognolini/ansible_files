@@ -1,0 +1,10 @@
+---
+  - name: Create user account for Linux User
+    user:
+      name: $USERNAME
+      state: present
+      comment: 'Dean Tognolini'
+      groups: wheel
+      append: yes
+      password: '$PWHASH'
+      shell: /bin/bash

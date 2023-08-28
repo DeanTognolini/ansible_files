@@ -1,0 +1,10 @@
+---
+- name: Add SSH Key to Managed Nodes
+  hosts: all
+  become: yes
+  tasks:
+    - name: Add Ansible Control Node SSH Public Key
+      authorized_key:
+        user: ansible
+        state: present
+        key: "{{ lookup('file', '/home/ansible/ssh/id_rsa.pub') }}"

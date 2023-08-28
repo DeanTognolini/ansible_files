@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: true
+  vars_files:
+    - group_vars/servers/vault.yml
+
+  tasks:
+    - name: Create user account for Linux User
+      include_role:
+        name: adduser

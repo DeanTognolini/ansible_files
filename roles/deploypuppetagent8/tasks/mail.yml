@@ -1,0 +1,22 @@
+---
+- name: Add Puppet 8 Repository for RHEL 9
+  shell: rpm -U "https://yum.puppet.com/puppet8-release-el-9.noarch.rpm"
+  args:
+    creates: /etc/yum.repos.d/puppet8-release.repo
+
+- name: Install Puppet Agent
+  package:
+    name: puppet-agent
+    state: present
+
+- name: Ensure Puppet Service is Running
+  service:
+    name: puppet
+    state: started
+    enabled: yes
+
+- name: Configure Puppet to use Puppet Master
+  lineinfile:
+    path: /etc/puppetlabs/puppet/puppet.conf
+    line: 'server=puppet.bapcor.com.au'
+  notify: Restart Puppet
