@@ -18,5 +18,5 @@
 - name: Configure Puppet to use Puppet Master
   lineinfile:
     path: /etc/puppetlabs/puppet/puppet.conf
-    line: 'server=puppet.bapcor.com.au'
+    line: 'server=$PUPPETSERVER'
   notify: Restart Puppet
